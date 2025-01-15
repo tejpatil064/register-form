@@ -1,7 +1,7 @@
 import Express from "express"
 import dotenv from "dotenv"
-import dbConnect from "./config/db.js"
-import userRoute from "./routes/userRoute.js"
+import dbConnect from "../config/db.js"
+import userRoute from "../routes/userRoute.js"
 import cors from "cors"
 dotenv.config()
 const app = Express()
