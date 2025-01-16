@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 function RegistrationForm() {
   const [formData, setFormData] = useState({
@@ -221,6 +222,7 @@ function RegistrationForm() {
         >
           {loading ? "Registering..." : "Register"}
         </button>
+        <span className="text-blue-500 hover:text-blue-700 font-normal transition duration-300 flex flex-col items-center justify-center"><p> <Link to="/login"> Already have an account? Login</Link>  </p></span>
       </form>
       <p className="mt-4 text-center text-sm text-gray-600">
         Developed by

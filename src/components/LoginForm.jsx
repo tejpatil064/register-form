@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useRef, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 export const LoginForm = () => {
@@ -34,6 +35,8 @@ export const LoginForm = () => {
       setLoading(false);
     }
   };
+
+  
 
   return (
     <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
@@ -97,6 +100,8 @@ export const LoginForm = () => {
         >
           {loading ? "log ininnnn..." : "login"}
         </button>
+        
+        <span className="text-blue-500 hover:text-blue-700 font-normal transition duration-300 flex flex-col items-center justify-center"><p> <Link to="/"> Don't have an account?Register</Link>  </p></span>
       </form>
       <p className="mt-4 text-center text-sm text-gray-600">
         Developed by
@@ -106,7 +111,8 @@ export const LoginForm = () => {
           rel="noopener noreferrer"
           className="text-indigo-600 hover:underline"
         >
-          UI Studio - Tejas Patil
+          
+           UI Studio - Tejas Patil
         </a>
       </p>
     </div>
