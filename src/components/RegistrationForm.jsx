@@ -8,6 +8,7 @@ function RegistrationForm() {
     name: "",
     username: "",
     email: "",
+    profilePhoto: "",
     password: "",
     confirmPassword: "",
   });
@@ -69,20 +70,62 @@ function RegistrationForm() {
     return Object.keys(newErrors).length === 0;
   };
 
+  const handleUploadImage = async (e) => {
+    e.preventDefault();
+    const image = e.target.files[0];
+    console.log(image);
+    if (image) {
+      setLoading(true);
+      const imageData = new FormData();
+      imageData.append("file", image);
+      imageData.append("upload_preset", "practice");
+      imageData.append("cloud_name", "dih4mkdr2");
+
+      try {
+        const response = await fetch(
+          "https://api.cloudinary.com/v1_1/dih4mkdr2/image/upload",
+          {
+            method: "POST",
+            body: imageData,
+          }
+        );
+        const data = await response.json();
+        console.log(data);
+        if (data) {
+          setFormData((prevState) => ({
+            ...prevState,
+            profilePhoto: data.secure_url,
+          }));
+          console.log(formData);
+          toast.success("Image uploaded successfully!");
+        } else {
+          toast.error("Failed to upload image. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error uploading image:", error);
+        toast.error("An error occurred during image upload.");
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      toast.error("Please select an image to upload.");
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
 
     try {
       setLoading(true);
-      const formURL = "https://register-form-5dub.vercel.app/api/signup";
+      const formURL = "/api/signup";
       await axios.post(formURL, formData);
       toast.success("Successfully signed up!");
-
       setFormData({
         name: "",
         username: "",
         email: "",
+        profilePhoto: "",
         password: "",
         confirmPassword: "",
       });
@@ -141,6 +184,26 @@ function RegistrationForm() {
           {errors.username && (
             <p className="text-red-600 text-sm">{errors.username}</p>
           )}
+        </div>
+
+        {/* Profile photo */}
+        <div>
+          <label
+            htmlFor="profilePhoto"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Profile Photo
+          </label>
+          <input
+            type="file"
+            id="profilePhoto"
+            name="profilePhoto"
+            accept="image/*"
+            onChange={handleUploadImage}
+            className="mt-1 block w-full px-3 py-2 bg-white border border-gray
+           rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo
+           -500"
+          />
         </div>
 
         {/* Email */}
@@ -222,7 +285,12 @@ function RegistrationForm() {
         >
           {loading ? "Registering..." : "Register"}
         </button>
-        <span className="text-blue-500 hover:text-blue-700 font-normal transition duration-300 flex flex-col items-center justify-center"><p> <Link to="/login"> Already have an account? Login</Link>  </p></span>
+        <span className="text-blue-500 hover:text-blue-700 font-normal transition duration-300 flex flex-col items-center justify-center">
+          <p>
+            {" "}
+            <Link to="/login"> Already have an account? Login</Link>{" "}
+          </p>
+        </span>
       </form>
       <p className="mt-4 text-center text-sm text-gray-600">
         Developed by
