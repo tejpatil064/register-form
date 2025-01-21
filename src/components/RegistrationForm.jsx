@@ -119,6 +119,7 @@ function RegistrationForm() {
     try {
       setLoading(true);
       const formURL = "https://register-form-5dub.vercel.app/api/signup";
+      // const formURL = "http://localhost:3000/api/signup";
       await axios.post(formURL, formData);
       toast.success("Successfully signed up!");
       setFormData({
