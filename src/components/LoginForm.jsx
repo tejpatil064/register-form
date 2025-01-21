@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -111,7 +111,6 @@ export const LoginForm = () => {
           rel="noopener noreferrer"
           className="text-indigo-600 hover:underline"
         >
-          
            UI Studio - Tejas Patil
         </a>
       </p>
